@@ -1,0 +1,22 @@
+#!/bin/bash
+IFS='
+'
+COLOUR="#FFAE00"
+for x in `nmcli -t connection show | grep vpn`;
+do
+    name=`echo $x | cut -d':' -f1`
+    [[ -z `echo $x | cut -d':' -f4` ]] && status="OFF" || status="ON"
+    [[ -z $TEXT ]] && TEXT=$name:$status || TEXT=$TEXT' '$name:$status
+    if [ $name = $monitor ] 
+    then
+        COLOUR="#FF0000"
+        if [ $status = "ON" ]
+        then 
+            COLOUR="#e180fc"
+        fi
+    fi
+    # [ "$name" = "$monitor" ] && ([ $status = "ON" ] && echo "1" || echo "2")
+done;
+echo $TEXT
+echo $TEXT
+echo $COLOUR
